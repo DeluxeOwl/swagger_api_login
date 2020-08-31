@@ -160,7 +160,12 @@ async def get_documentation(request : Request):
     if token:
         user = await get_current_user(token)
         if(user):
-            return get_swagger_ui_html(openapi_url="/openapi.json", title="docs")
+            return get_swagger_ui_html(
+                openapi_url="/openapi.json",
+                title="docs",
+                oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+                swagger_js_url="/static/swagger-ui-bundle.js",
+                swagger_css_url="/static/swagger-ui.css",)
     else:
         return JSONResponse({'Error': 'Not authenticated.'})
 
